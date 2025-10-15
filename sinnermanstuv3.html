@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sinnerman Studios</title>
+
+  <!-- Amatic SC font -->
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(180deg, #000, #0a0a0a 60%, #111);
+      color: #f5f5f5;
+      font-family: 'Amatic SC', cursive;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: flicker 6s infinite ease-in-out alternate;
+    }
+
+    /* ===== FILM GRAIN OVERLAY ===== */
+    .film-grain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      mix-blend-mode: overlay;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ===== GATE JITTER ===== */
+    @keyframes gateJitter {
+      0%, 97%, 100% { transform: translate(0, 0); }
+      98% { transform: translate(-1px, 1px); }
+      99% { transform: translate(1px, -1px); }
+    }
+
+    body {
+      animation: gateJitter 4s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { filter: brightness(1); }
+      20%, 24%, 55% { filter: brightness(0.95); }
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      z-index: 2;
+    }
+
+    .logo {
+      font-size: 4rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: #f5f5f5;
+      text-shadow: 0 0 8px rgba(255,255,255,0.2);
+      animation: logoGlitch 2.5s infinite;
+    }
+
+    @keyframes logoGlitch {
+      0% { transform: translate(0); opacity: 1; }
+      20% { transform: translate(-1px, 1px); opacity: 0.9; }
+      40% { transform: translate(2px, -1px); opacity: 1; }
+      60% { transform: translate(-1px, 0); opacity: 0.95; }
+      80% { transform: translate(1px, 1px); opacity: 1; }
+      100% { transform: translate(0); opacity: 1; }
+    }
+
+    nav {
+      margin-top: 1.5rem;
+    }
+
+    nav a {
+      margin: 0 1.5rem;
+      text-decoration: none;
+      color: #f5f5f5;
+      font-weight: 700;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0%;
+      height: 2px;
+      background: #f5f5f5;
+      transition: width 0.3s;
+    }
+
+    nav a:hover {
+      color: #999;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* ===== PAGES ===== */
+    .page {
+      display: none;
+      max-width: 700px;
+      text-align: center;
+      animation: fadeIn 0.5s ease forwards;
+      z-index: 2;
+    }
+
+    .active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    p {
+      font-size: 1.8rem;
+      line-height: 1.6;
+    }
+
+    .subsection {
+      background: rgba(255,255,255,0.05);
+      margin: 1.2rem 0;
+      padding: 1rem;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      font-size: 1.8rem;
+    }
+
+    .subsection:hover {
+      transform: translateY(-3px);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    input, textarea {
+      padding: 0.8rem;
+      border: none;
+      border-radius: 5px;
+      background: #1c1c1c;
+      color: #f5f5f5;
+      font-family: 'Amatic SC', cursive;
+      font-size: 1.6rem;
+    }
+
+    button {
+      background: #f5f5f5;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      padding: 0.8rem;
+      font-weight: 700;
+      font-family: 'Amatic SC', cursive;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #999;
+      color: #000;
+    }
+
+    footer {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    footer img {
+      width: 35px;
+      height: 35px;
+      filter: grayscale(1) contrast(1.3);
+      opacity: 0.85;
+      transition: opacity 0.3s;
+    }
+
+    footer img:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Film grain overlay video -->
+  <video autoplay loop muted playsinline class="film-grain">
+    <source src="https://cdn.jsdelivr.net/gh/konaraddi/filmgrain/filmgrain.mp4" type="video/mp4">
+  </video>
+
+  <header>
+    <h1 class="logo">Sinnerman Studios</h1>
+    <nav>
+      <a href="#" onclick="showPage('about')">About</a>
+      <a href="#" onclick="showPage('projects')">Projects</a>
+      <a href="#" onclick="showPage('contact')">Contact</a>
+    </nav>
+  </header>
+
+  <section id="about" class="page">
+    <p>hi! i'm izzy, a 21-year-old nyc-based indie dev working on projects that make my head hurt.<br>
+      i love experimenting with art, story, and stupid mechanics to bring stories to life.</p>
+
+    <h2>learn more about my project teams!</h2>
+    <div class="subsection">
+      <h3>(re)act</h3>
+      <p>work in progress — updates coming soon!</p>
+    </div>
+
+    <div class="subsection">
+      <h3>marisol boulevard</h3>
+      <p>work in progress — updates coming soon!</p>
+    </div>
+  </section>
+
+  <section id="projects" class="page">
+    <h2>Projects</h2>
+    <div class="subsection">
+      <h3>(re)act</h3>
+      <p>work in progress — art and updates coming soon!</p>
+    </div>
+
+    <div class="subsection">
+      <h3>marisol boulevard</h3>
+      <p>work in progress — art and updates coming soon!</p>
+    </div>
+  </section>
+
+  <section id="contact" class="page">
+    <h2>Contact</h2>
+    <p>Got a question or collaboration idea? Reach out below!</p>
+    <form action="mailto:sinnermanstudios@gmail.com" method="post" enctype="text/plain">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <a href="https://x.com/sinnermanstuu" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
+    <a href="https://www.instagram.com/sinnermanstudios/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"></a>
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
