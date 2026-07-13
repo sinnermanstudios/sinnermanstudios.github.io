@@ -1,244 +1,319 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sinnerman Studios</title>
+/* ===== GLOBAL RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  <!-- Amatic SC font -->
-  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+/* ===== MAIN BODY ===== */
+body {
+  background: linear-gradient(180deg, #000, #0a0a0a 60%, #111);
+  color: #f5f5f5;
+  font-family: 'Lacquer', cursive;
+  overflow-x: hidden;
+  min-height: 100vh;
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-    body {
-      background: linear-gradient(180deg, #000, #0a0a0a 60%, #111);
-      color: #f5f5f5;
-      font-family: 'Amatic SC', cursive;
-      overflow-x: hidden;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      animation: flicker 6s infinite ease-in-out alternate;
-    }
+  position: relative;
 
-    /* ===== FILM GRAIN OVERLAY ===== */
-    .film-grain {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      mix-blend-mode: overlay;
-      opacity: 0.25;
-      pointer-events: none;
-      z-index: 999;
-    }
+  animation:
+    flicker 6s infinite ease-in-out alternate,
+    gateJitter 4s infinite;
+}
 
-    /* ===== GATE JITTER ===== */
-    @keyframes gateJitter {
-      0%, 97%, 100% { transform: translate(0, 0); }
-      98% { transform: translate(-1px, 1px); }
-      99% { transform: translate(1px, -1px); }
-    }
+/* ===== FILM GRAIN OVERLAY ===== */
+.film-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: overlay;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 999;
+}
 
-    body {
-      animation: gateJitter 4s infinite;
-    }
+/* ===== PROJECTOR FLICKER ===== */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    filter: brightness(1);
+  }
 
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { filter: brightness(1); }
-      20%, 24%, 55% { filter: brightness(0.95); }
-    }
+  20%, 24%, 55% {
+    filter: brightness(0.92);
+  }
+}
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-      z-index: 2;
-    }
+/* ===== OLD FILM GATE WEAVE ===== */
+@keyframes gateJitter {
+  0%, 97%, 100% {
+    transform: translate(0, 0);
+  }
 
-    .logo {
-      font-size: 4rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: #f5f5f5;
-      text-shadow: 0 0 8px rgba(255,255,255,0.2);
-      animation: logoGlitch 2.5s infinite;
-    }
+  98% {
+    transform: translate(-1px, 1px);
+  }
 
-    @keyframes logoGlitch {
-      0% { transform: translate(0); opacity: 1; }
-      20% { transform: translate(-1px, 1px); opacity: 0.9; }
-      40% { transform: translate(2px, -1px); opacity: 1; }
-      60% { transform: translate(-1px, 0); opacity: 0.95; }
-      80% { transform: translate(1px, 1px); opacity: 1; }
-      100% { transform: translate(0); opacity: 1; }
-    }
+  99% {
+    transform: translate(1px, -1px);
+  }
+}
 
-    nav {
-      margin-top: 1.5rem;
-    }
+/* ===== TEXT FLICKER ===== */
+@keyframes textFlicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 4px rgba(255,255,255,0.25),
+      0 0 10px rgba(255,255,255,0.1);
+  }
 
-    nav a {
-      margin: 0 1.5rem;
-      text-decoration: none;
-      color: #f5f5f5;
-      font-weight: 700;
-      font-size: 2rem;
-      letter-spacing: 1px;
-      position: relative;
-      transition: color 0.3s;
-    }
+  20%, 24%, 55% {
+    opacity: 0.85;
+    text-shadow:
+      0 0 2px rgba(255,255,255,0.1);
+  }
+}
 
-    nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -3px;
-      width: 0%;
-      height: 2px;
-      background: #f5f5f5;
-      transition: width 0.3s;
-    }
+/* ===== MICRO GLITCH MOVEMENT ===== */
+@keyframes microShift {
+  0%, 96%, 100% {
+    transform: translate(0,0);
+  }
 
-    nav a:hover {
-      color: #999;
-    }
+  97% {
+    transform: translate(-1px,0);
+  }
 
-    nav a:hover::after {
-      width: 100%;
-    }
+  98% {
+    transform: translate(1px,0);
+  }
 
-    /* ===== PAGES ===== */
-    .page {
-      display: none;
-      max-width: 700px;
-      text-align: center;
-      animation: fadeIn 0.5s ease forwards;
-      z-index: 2;
-    }
+  99% {
+    transform: translate(0,1px);
+  }
+}
 
-    .active {
-      display: block;
-    }
+/* ===== HEADER ===== */
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  z-index: 2;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+/* ===== MAIN LOGO ===== */
+.logo {
+  font-size: 4rem;
+  letter-spacing: 4px;
+  color: #f5f5f5;
 
-    h2 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
+  text-shadow:
+    0 0 6px rgba(255,255,255,0.25),
+    0 0 14px rgba(255,255,255,0.1);
 
-    p {
-      font-size: 1.8rem;
-      line-height: 1.6;
-    }
+  animation:
+    logoGlitch 2.5s infinite,
+    textFlicker 3s infinite;
+}
 
-    .subsection {
-      background: rgba(255,255,255,0.05);
-      margin: 1.2rem 0;
-      padding: 1rem;
-      border-radius: 8px;
-      transition: transform 0.3s ease;
-      font-size: 1.8rem;
-    }
+@keyframes logoGlitch {
+  0% {
+    transform: translate(0);
+    opacity: 1;
+  }
 
-    .subsection:hover {
-      transform: translateY(-3px);
-    }
+  20% {
+    transform: translate(-1px,1px);
+  }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
+  40% {
+    transform: translate(2px,-1px);
+  }
 
-    input, textarea {
-      padding: 0.8rem;
-      border: none;
-      border-radius: 5px;
-      background: #1c1c1c;
-      color: #f5f5f5;
-      font-family: 'Amatic SC', cursive;
-      font-size: 1.6rem;
-    }
+  60% {
+    transform: translate(-1px,0);
+  }
 
-    button {
-      background: #f5f5f5;
-      color: #000;
-      border: none;
-      border-radius: 5px;
-      padding: 0.8rem;
-      font-weight: 700;
-      font-family: 'Amatic SC', cursive;
-      font-size: 1.8rem;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
+  80% {
+    transform: translate(1px,1px);
+  }
 
-    button:hover {
-      background: #999;
-      color: #000;
-    }
+  100% {
+    transform: translate(0);
+  }
+}
 
-    footer {
-      margin-top: 3rem;
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      z-index: 2;
-    }
+/* ===== NAVIGATION ===== */
+nav {
+  margin-top: 1.5rem;
+}
 
-    footer img {
-      width: 35px;
-      height: 35px;
-      filter: grayscale(1) contrast(1.3);
-      opacity: 0.85;
-      transition: opacity 0.3s;
-    }
+nav a {
+  margin: 0 1.5rem;
+  text-decoration: none;
+  color: #f5f5f5;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  position: relative;
+  transition: color 0.3s;
 
-    footer img:hover {
-      opacity: 1;
-    }
-  </style>
-</head>
+  animation:
+    textFlicker 4s infinite,
+    microShift 8s infinite;
+}
 
-<body>
-  <!-- Film grain overlay video -->
-  <video autoplay loop muted playsinline class="film-grain">
-    <source src="https://cdn.jsdelivr.net/gh/konaraddi/filmgrain/filmgrain.mp4" type="video/mp4">
-  </video>
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background: #f5f5f5;
+  transition: width 0.3s;
+}
 
-  <header>
-    <h1 class="logo">Sinnerman Studios</h1>
-    <nav>
-      <a href="#" onclick="showPage('about')">About</a>
-      <a href="#" onclick="showPage('projects')">Projects</a>
-      <a href="#" onclick="showPage('contact')">Contact</a>
-    </nav>
-  </header>
+nav a:hover {
+  color: #999;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* ===== HEADINGS ===== */
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+
+  animation:
+    textFlicker 4s infinite,
+    microShift 8s infinite;
+}
+
+/* ===== PARAGRAPHS ===== */
+p {
+  font-size: 1.8rem;
+  line-height: 1.6;
+
+  animation:
+    textFlicker 5s infinite,
+    microShift 10s infinite;
+}
+
+/* ===== SECTIONS ===== */
+.subsection {
+  background: rgba(255,255,255,0.05);
+  margin: 1.2rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+
+  font-size: 1.8rem;
+
+  transition: transform 0.3s ease;
+
+  animation:
+    textFlicker 5s infinite,
+    microShift 10s infinite;
+}
+
+.subsection:hover {
+  transform: translateY(-3px);
+}
+
+/* ===== FORMS ===== */
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
+input,
+textarea {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 5px;
+  background: #1c1c1c;
+  color: #f5f5f5;
+  font-size: 1.6rem;
+}
+
+button {
+  background: #f5f5f5;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  padding: 0.8rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+button:hover {
+  background: #999;
+  color: #000;
+}
+
+/* ===== PAGES ===== */
+.page {
+  display: none;
+  max-width: 700px;
+  text-align: center;
+  animation: fadeIn 0.5s ease forwards;
+  z-index: 2;
+}
+
+.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== FOOTER ===== */
+footer {
+  margin-top: 3rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  z-index: 2;
+}
+
+footer img {
+  width: 35px;
+  height: 35px;
+  filter: grayscale(1) contrast(1.3);
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+
+footer img:hover {
+  opacity: 1;
+}
 
   <section id="about" class="page">
-    <p>hi! i'm izzy, a 21-year-old nyc-based indie dev working on projects that make my head hurt.<br>
-      i love experimenting with art, story, and stupid mechanics to bring stories to life.</p>
+    <p>hi! i'm izzy, a 22-year-old nyc-based indie dev working on projects that make my head hurt.<br>
+      i love experimenting with art, story, and in-game mechanics to bring ideas to life.</p>
 
     <h2>learn more about my project teams!</h2>
     <div class="subsection">
-      <h3>(re)act</h3>
-      <p>work in progress — updates coming soon!</p>
+      <h3>(panopticon)</h3>
+      <p>work in progress — updates coming shortly...</p>
     </div>
 
     <div class="subsection">
@@ -250,13 +325,13 @@
   <section id="projects" class="page">
     <h2>Projects</h2>
     <div class="subsection">
-      <h3>(re)act</h3>
-      <p>work in progress — art and updates coming soon!</p>
+      <h3>(panopticon)</h3>
+      <p>work in progress — updates coming shortly...</p>
     </div>
 
     <div class="subsection">
       <h3>marisol boulevard</h3>
-      <p>work in progress — art and updates coming soon!</p>
+      <p>work in progress — updates coming soon!</p>
     </div>
   </section>
 
