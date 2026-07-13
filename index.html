@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sinnerman Studios</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #050505;
+      --text: #dad7cd;
+      --panel: rgba(255,255,255,0.04);
+    }
+
+    body {
+      font-family: 'Lacquer', cursive;
+      color: var(--text);
+
+      background:
+        radial-gradient(
+          circle at center,
+          #111 0%,
+          #070707 45%,
+          #000 100%
+        );
+
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* CRT scanlines */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+
+      background:
+        repeating-linear-gradient(
+          transparent 0px,
+          transparent 2px,
+          rgba(255,255,255,.025) 3px,
+          rgba(255,255,255,.025) 4px
+        );
+
+      z-index: 10;
+    }
+
+    /* vignette */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle,
+          transparent 55%,
+          rgba(0,0,0,.55) 100%
+        );
+
+      z-index: 11;
+    }
+
+    .film-grain {
+      position: fixed;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      opacity: .15;
+      mix-blend-mode: screen;
+
+      pointer-events: none;
+
+      z-index: 12;
+    }
+
+    @keyframes trackingError {
+      0%,95%,100% {
+        transform: translateX(0);
+      }
+
+      96% {
+        transform: translateX(-8px);
+      }
+
+      97% {
+        transform: translateX(6px);
+      }
+
+      98% {
+        transform: translateX(-4px);
+      }
+    }
+
+    @keyframes breathe {
+      0%,100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .8;
+      }
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+      z-index: 20;
+    }
+
+    .logo {
+      font-size: 5rem;
+      letter-spacing: 8px;
+
+      color: var(--text);
+
+      text-shadow:
+        -2px 0 rgba(255,0,0,.3),
+         2px 0 rgba(0,255,255,.3),
+         0 0 20px rgba(255,255,255,.12);
+
+      animation:
+        trackingError 12s infinite,
+        breathe 8s infinite ease-in-out;
+    }
+
+    .tagline {
+      margin-top: 1rem;
+      font-size: .8rem;
+      letter-spacing: 5px;
+      opacity: .6;
+    }
+
+    nav {
+      margin-top: 2rem;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+
+      margin: 0 1rem;
+      font-size: 1.5rem;
+
+      transition: .3s;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    .page {
+      display: none;
+      width: 90%;
+      max-width: 850px;
+      text-align: center;
+      z-index: 20;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    p {
+      line-height: 1.8;
+    }
+
+    .subsection {
+      background: var(--panel);
+
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    input,
+    textarea {
+      background: #111;
+      color: white;
+
+      border: 1px solid #333;
+      border-radius: 8px;
+
+      padding: 1rem;
+
+      font-family: inherit;
+    }
+
+    button {
+      padding: 1rem;
+
+      border: none;
+      border-radius: 8px;
+
+      background: var(--text);
+      color: black;
+
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 3rem;
+      display: flex;
+      gap: 1rem;
+      z-index: 20;
+    }
+
+    footer img {
+      width: 36px;
+      height: 36px;
+
+      filter: grayscale(1);
+
+      transition: .3s;
+    }
+
+    footer img:hover {
+      transform: scale(1.1);
+      filter: grayscale(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <video autoplay loop muted playsinline class="film-grain">
+    <source src="https://cdn.jsdelivr.net/gh/konaraddi/filmgrain/filmgrain.mp4" type="video/mp4">
+  </video>
+
+  <header>
+    <h1 class="logo">Sinnerman Studios</h1>
+
+    <p class="tagline">
+      STORIES BURIED BENEATH STATIC
+    </p>
+
+    <nav>
+      #
+      #
+      #
+    </nav>
+  </header>
+
+  <section id="about" class="page active">
+    <p>
+      hi! i'm izzy, a 22-year-old nyc-based indie dev working on projects that make my head hurt.
+      <br><br>
+      i love experimenting with art, story, and in-game mechanics to bring ideas to life.
+    </p>
+
+    <div class="subsection">
+      <h3>(panopticon)</h3>
+      <p>work in progress — updates coming shortly...</p>
+    </div>
+
+    <div class="subsection">
+      <h3>marisol boulevard</h3>
+      <p>work in progress — updates coming soon!</p>
+    </div>
+  </section>
+
+  <section id="projects" class="page">
+    <h2>Projects</h2>
+
+    <div class="subsection">
+      <h3>(panopticon)</h3>
+      <p>work in progress — updates coming shortly...</p>
+    </div>
+  </section>
+
+  <section id="contact" class="page">
+    <h2>Contact</h2>
+
+    <form action="mailto:sinnermanstudios@gmail.com" method="post" enctype="text/plain">
+      <input type="text" name="name" placeholder="Your Name" required>
+
+      <input type="email" name="email" placeholder="Your Email" required>
+
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+
+      <button type="submit">
+        Send Message
+      </button>
+    </form>
+  </section>
+
+  <footer>
+    <a href="https://x.com/sinnermanstuu" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+    </a>
+
+    <a href="https://www.instagram.com/sinnermanstudios/" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    </a>
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+
+      document.getElementById(pageId).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
